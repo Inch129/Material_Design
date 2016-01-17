@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@drawable/search_hdpi"
+            android:title="Your recent activity" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/search_hdpi"
+            android:title="Recent suggestion" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/search_hdpi"
+            android:title="Suggest term" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/search_hdpi"
+            android:title="Settings" />
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/search_hdpi"
+                android:title="Rate app" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/search_hdpi"
+                android:title="Feedback" />
+            <item
+                android:id="@+id/share"
+                android:icon="@drawable/search_hdpi"
+                android:title="Share" />
+        </menu>
+    </item>
+    </group>
+
+</menu>
