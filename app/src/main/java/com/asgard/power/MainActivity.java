@@ -39,15 +39,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initNavigationDrawer() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //То откуда
+        drawer.closeDrawer(GravityCompat.START);
+         //Класс "отвечающий" за иконку-гамбургер, синхронизирующий и связывающий navigation drawer и иконку.
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.open_drawer, R.string.close_drawer);
         drawer.setDrawerListener(toggle);
+        /**
+         Сам момент синхронизации
+         */
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
 
     }
 
+    /**
+     * Приятность для пользователя, при нажатии кнопки "назад" мы не выходим из приложения
+     * При условии открытого Navigation Drawer.
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -59,8 +70,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void initToolbar() {
-        toolbar= (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Поддержка тулбара.Насколько я понимаю, система принимает его как ActionBar , но кастомизированный
+        //нами, обязательно к использованию.
         setSupportActionBar(toolbar);
+        //Вытаскиваем иконку гамбургера.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitle("Power");
     }
@@ -70,34 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-       /* if (id == R.id.action_settings) {
-            return true;
-        }*/
-
-        return super.onOptionsItemSelected(item);
     }
 
 }
