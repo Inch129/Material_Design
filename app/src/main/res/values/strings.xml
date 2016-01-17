@@ -11,4 +11,11 @@
     <string name="drawer_item_contact">Contact</string>
     <string name="open_drawer">Open navigation drawer</string>
     <string name="close_drawer">Close navigation drawer</string>
+    <array name="words">
+        <item>ХУЙ</item>
+        <item>ПИЗДА</item>
+        <item>ДЖИГУРДА</item>
+        <item>СКОВОРОДА</item>
+        <item>ГОВНОТА</item>
+    </array>
 </resources>

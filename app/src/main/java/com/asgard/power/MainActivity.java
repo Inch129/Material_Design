@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,9 +26,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setTheme(R.style.AppDefault);
         setContentView(R.layout.activity_main);
+
+        //initRecyclerView();
+
         initToolbar();
         initNavigationDrawer();
         initTabs();
+    }
+
+    private void initRecyclerView() {
+        RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvWords);
+        RvWordsAdapter adapter = new RvWordsAdapter(Word.createWords(getResources().getStringArray(R.array.words)));
+
+        rvContacts.setAdapter(adapter);
+
+        rvContacts.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void initTabs() {
