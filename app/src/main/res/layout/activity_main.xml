@@ -20,13 +20,15 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                app:theme="@style/Theme.AppCompat.Light.NoActionBar"
+                app:theme="@style/Theme.AppCompat.NoActionBar"
                 app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
                 android:background="@color/colorPrimary" />
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
+                android:layout_marginLeft="72dp"
+                
                 android:layout_height="wrap_content"
                 app:tabMode="scrollable"
                 xmlns:tools="http://schemas.android.com/tools"

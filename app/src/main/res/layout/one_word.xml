@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/word"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ImageButton
+        android:id="@+id/thumpdown"
+        android:src="@drawable/thumpupgrey_hdpi"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignTop="@+id/thumpup"
+        android:layout_toRightOf="@+id/likes"
+        android:layout_toEndOf="@+id/likes" />
 
     <TextView
         android:id="@+id/likes"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    
-    <Button
-        android:id="@+id/likeInc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="likes"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:text="STATIC"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ImageButton
+        android:id="@+id/thumpup"
+        android:src="@drawable/thumpupgrey_hdpi"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/likes"
+        android:layout_toStartOf="@+id/likes" />
 
-</LinearLayout>
+</RelativeLayout>

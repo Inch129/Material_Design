@@ -6,11 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
 
-public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHolder>{
+public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHolder> {
 
     private List<Word> words;
 
@@ -41,16 +42,16 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         Word word = getWords().get(position);
 
-        TextView wordView = holder.getWordTextView();
-        wordView.setText(word.getWord());
+       // TextView wordView = holder.getWordTextView();
+        //wordView.setText(word.getWord());
 
         final TextView likesView = holder.getLikesTextView();
         likesView.setText(Integer.toString(word.getLikes()));
 
-        Button likesIncBtn = holder.getLikesIncBtn();
-        likesIncBtn.setText("INCREMENT");
+        //Button likesIncBtn = holder.getLikesIncBtn();
+       // likesIncBtn.setText("INCREMENT");
 
-        likesIncBtn.setOnClickListener(new LikesIncBtnClick(word, likesView));
+        //likesIncBtn.setOnClickListener(new LikesIncBtnClick(word, likesView));
     }
 
     @Override
@@ -59,16 +60,16 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView wordTextView;
+        private ImageButton wordTextView;
         private TextView likesTextView;
-        private Button likesIncBtn;
+        private ImageButton likesIncBtn;
 
-        public TextView getWordTextView() {
+        public ImageButton getWordTextView() {
             return wordTextView;
         }
 
         private void setWordTextView(View value) {
-            wordTextView = (TextView) value;
+            wordTextView = (ImageButton) value;
         }
 
         public TextView getLikesTextView() {
@@ -79,20 +80,20 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
             likesTextView = (TextView) value;
         }
 
-        public Button getLikesIncBtn() {
+        public ImageButton getLikesIncBtn() {
             return likesIncBtn;
         }
 
         private void setLikesIncBtn(View value) {
-            likesIncBtn = (Button) value;
+            likesIncBtn = (ImageButton) value;
         }
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            setWordTextView(itemView.findViewById(R.id.word));
+            setWordTextView(itemView.findViewById(R.id.thumpup));
             setLikesTextView(itemView.findViewById(R.id.likes));
-            setLikesIncBtn(itemView.findViewById(R.id.likeInc));
+            setLikesIncBtn(itemView.findViewById(R.id.thumpdown));
         }
     }
 }
