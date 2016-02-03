@@ -7,16 +7,26 @@ import android.widget.TextView;
 /**
  * Created by Администратор on 01.02.2016.
  */
-public class LikesBtnClick implements View.OnClickListener {
+public class LikesBtnClick implements View.OnClickListener, ThumbsListener {
 
     private Word word;
     private TextView likesView;
     private ImageButton like;
+    private ThumbsListener subscriber;
 
-    public LikesBtnClick(Word word, TextView likesView, ImageButton like) {
+    private ThumbsListener getSubscriber() {
+        return subscriber;
+    }
+
+    private void setSubscriber(ThumbsListener value) {
+        subscriber = value;
+    }
+
+    public LikesBtnClick(Word word, TextView likesView, ImageButton like, ThumbsListener subscriber) {
         setWord(word);
         setLikesView(likesView);
         setLike(like);
+        setSubscriber(subscriber);
     }
 
     public void setLikesView(TextView likesView) {
@@ -39,6 +49,10 @@ public class LikesBtnClick implements View.OnClickListener {
         word.setLikes(word.getLikes() + 1);
         like.setImageResource(R.drawable.thumb_up_green_hdpi);
         getLikesView().setText(Integer.toString(word.getLikes()));
+        getSubscriber().callback(this);
+    }
 
+    public void callback(View sender) {
+        //Вот тут ебенишь работу по смене отображения.
     }
 }
