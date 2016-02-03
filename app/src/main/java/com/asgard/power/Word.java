@@ -13,11 +13,11 @@ public class Word  {
 
     public static List<Word> createWords(String [] words){
         List<Word> content = new ArrayList<>();
-
-        for (String word:words) {
-            content.add(new Word(word, new Random().nextInt(100)));
+        for (int i = 0; i < 20; i++) {
+            for (String word:words) {
+                content.add(new Word(word, new Random().nextInt(100)));
+            }
         }
-
         return content;
     }
 

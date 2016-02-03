@@ -1,32 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="56dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:аndroid="http://schemas.android.com/tools"
+    android:layout_margin="1dp">
 
-    <ImageButton
-        android:id="@+id/thumpdown"
-        android:src="@drawable/thumpupgrey_hdpi"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_alignTop="@+id/thumpup"
-        android:layout_toRightOf="@+id/likes"
-        android:layout_toEndOf="@+id/likes" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/likes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="likes"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        <ImageButton
+            android:id="@+id/thumpup"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:src="@drawable/thumpupgrey_hdpi" />
 
-    <ImageButton
-        android:id="@+id/thumpup"
-        android:src="@drawable/thumpupgrey_hdpi"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/likes"
-        android:layout_toStartOf="@+id/likes" />
+        <TextView
+            android:id="@+id/likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="likes" />
 
-</RelativeLayout>
+        <ImageButton
+            android:id="@+id/thumpdown"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:src="@drawable/thumpdowngrey_hdpi" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@null"
+            android:layout_gravity="right"
+            аndroid:layout_alignParentRight="true"
+            android:src="@drawable/info_hdpi"
+            android:id="@+id/info" />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

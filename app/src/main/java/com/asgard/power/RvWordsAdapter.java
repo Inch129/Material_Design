@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -42,16 +41,15 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         Word word = getWords().get(position);
 
-       // TextView wordView = holder.getWordTextView();
-        //wordView.setText(word.getWord());
-
         final TextView likesView = holder.getLikesTextView();
         likesView.setText(Integer.toString(word.getLikes()));
 
-        //Button likesIncBtn = holder.getLikesIncBtn();
-       // likesIncBtn.setText("INCREMENT");
+        ImageButton LikesBtn = holder.getLikes();
+        ImageButton DislikesBtn = holder.getDislikesBtn();
 
-        //likesIncBtn.setOnClickListener(new LikesIncBtnClick(word, likesView));
+
+        LikesBtn.setOnClickListener(new LikesBtnClick(word, likesView, holder.getLikesBtn()));
+        DislikesBtn.setOnClickListener(new DislikesBtnClick(word, likesView, holder.getDislikesBtn()));
     }
 
     @Override
@@ -64,7 +62,7 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
         private TextView likesTextView;
         private ImageButton likesIncBtn;
 
-        public ImageButton getWordTextView() {
+        public ImageButton getLikes() {
             return wordTextView;
         }
 
@@ -80,8 +78,12 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
             likesTextView = (TextView) value;
         }
 
-        public ImageButton getLikesIncBtn() {
+        public ImageButton getDislikesBtn() {
             return likesIncBtn;
+        }
+
+        public ImageButton getLikesBtn() {
+            return wordTextView;
         }
 
         private void setLikesIncBtn(View value) {

@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.asgard.power.adapter.TabsPagerFragmentAdapter;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.AppDefault);
+  //      setTheme(R.style.AppDefault);
         setContentView(R.layout.activity_main);
 
         //initRecyclerView();
@@ -90,6 +91,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Вытаскиваем иконку гамбургера.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitle("Power");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     @Override

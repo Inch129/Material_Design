@@ -1,10 +1,11 @@
 package com.asgard.power;
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-class LikesIncBtnClick implements View.OnClickListener {
-
+class DislikesBtnClick implements View.OnClickListener {
+    private ImageButton dislike;
     private Word word;
     private TextView likesView;
 
@@ -12,7 +13,7 @@ class LikesIncBtnClick implements View.OnClickListener {
         return likesView;
     }
 
-    public void setLikesView(TextView likesView) {
+    public void setDislikesView(TextView likesView) {
         this.likesView = likesView;
     }
 
@@ -20,18 +21,24 @@ class LikesIncBtnClick implements View.OnClickListener {
         return word;
     }
 
+    public void setDislike(ImageButton like){
+        this.dislike = like;
+    }
+
     public void setWord(Word word) {
         this.word = word;
     }
 
-    public LikesIncBtnClick(Word word, TextView likesView) {
+    public DislikesBtnClick(Word word, TextView likesView, ImageButton like) {
         setWord(word);
-        setLikesView(likesView);
+        setDislikesView(likesView);
+        setDislike(like);
     }
 
     @Override
     public void onClick(View v) {
-        word.setLikes(word.getLikes() + 1);
+        word.setLikes(word.getLikes() - 1);
+        dislike.setImageResource(R.drawable.thumb_red_down_hdpi);
         getLikesView().setText(Integer.toString(word.getLikes()));
     }
 }

@@ -35,7 +35,7 @@ public class RecycleFragment extends Fragment {
         view = inflater.inflate(LAYOUT,container,false);
 
         initRecyclerView(view, container.getContext());
-
+     //   setRetainInstance(true);
         return view;
     }
 
