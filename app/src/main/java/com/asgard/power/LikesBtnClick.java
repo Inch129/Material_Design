@@ -1,8 +1,11 @@
 package com.asgard.power;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.asgard.power.interfaces.ThumbsListener;
 
 /**
  * Created by Администратор on 01.02.2016.
@@ -18,11 +21,11 @@ public class LikesBtnClick implements View.OnClickListener, ThumbsListener {
         return subscriber;
     }
 
-    private void setSubscriber(ThumbsListener value) {
+    public void setSubscriber(ThumbsListener value) {
         subscriber = value;
     }
 
-    public LikesBtnClick(Word word, TextView likesView, ImageButton like, ThumbsListener subscriber) {
+    public LikesBtnClick(Word word, TextView likesView, ImageButton like) {
         setWord(word);
         setLikesView(likesView);
         setLike(like);
@@ -46,13 +49,18 @@ public class LikesBtnClick implements View.OnClickListener, ThumbsListener {
 
     @Override
     public void onClick(View v) {
+        Log.d("Test", "сабскрайбер сработал");
         word.setLikes(word.getLikes() + 1);
-        like.setImageResource(R.drawable.thumb_up_green_hdpi);
+
         getLikesView().setText(Integer.toString(word.getLikes()));
-        getSubscriber().callback(this);
+        getSubscriber().callback(like);
     }
 
-    public void callback(View sender) {
-        //Вот тут ебенишь работу по смене отображения.
+
+    @Override
+    public void callback(ImageButton dislike) {
+        Log.d("Test","callback сработал");
+        dislike.setImageResource(R.drawable.thumb_red_down_hdpi);
+        like.setImageResource(R.drawable.thumpupgrey_hdpi);
     }
 }

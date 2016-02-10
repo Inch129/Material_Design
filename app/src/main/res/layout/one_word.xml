@@ -39,6 +39,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="32dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:id="@+id/mainwords"
             android:layout_weight="1"/>
 
         <ImageView

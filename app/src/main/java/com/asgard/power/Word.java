@@ -11,15 +11,15 @@ public class Word  {
         this.likes = likes;
     }
 
-    public static List<Word> createWords(String [] words){
+   /* public static List<Word> createWords(String [] words){
         List<Word> content = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 5; i++) {
             for (String word:words) {
                 content.add(new Word(word, new Random().nextInt(100)));
             }
         }
         return content;
-    }
+    }*/
 
     private String word;
     private int likes;

@@ -14,6 +14,9 @@ import com.asgard.power.R;
 import com.asgard.power.RvWordsAdapter;
 import com.asgard.power.Word;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RecycleFragment extends Fragment {
     private static final int LAYOUT = R.layout.fragment_recycle;
     private View view;
@@ -41,10 +44,24 @@ public class RecycleFragment extends Fragment {
 
     private void initRecyclerView(View view, Context context) {
         RecyclerView rvContacts = (RecyclerView) view.findViewById(R.id.rvWords);
-        RvWordsAdapter adapter = new RvWordsAdapter(Word.createWords(getResources().getStringArray(R.array.words)));
+        RvWordsAdapter adapter = new RvWordsAdapter(createMock());
 
         rvContacts.setAdapter(adapter);
 
         rvContacts.setLayoutManager(new LinearLayoutManager(context));
+    }
+
+    private List<Word> createMock() {
+        List<Word> content = new ArrayList<>();
+        content.add(new Word("Force",0));
+        content.add(new Word("Strength",0));
+        content.add(new Word("Energy",0));
+        content.add(new Word("Influence",0));
+        content.add(new Word("Might",0));
+        content.add(new Word("Capacity",0));
+        content.add(new Word("Potency",0));
+
+        return content;
+
     }
 }

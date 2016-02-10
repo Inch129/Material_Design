@@ -9,18 +9,20 @@ android:fitsSystemWindows="true"
 tools:openDrawer="start">
 
 <android.support.design.widget.CoordinatorLayout
+    android:background="#f5f5f5"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/blue_gradient"
+        >
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@drawable/blue_gradient"
             app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
             app:theme="@style/Theme.AppCompat.NoActionBar" />
 
@@ -30,7 +32,6 @@ tools:openDrawer="start">
             style="@style/MyCustomTabLayout"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@drawable/blue_gradient"
             android:paddingLeft="68dp"
             app:tabIndicatorColor="@android:color/white"
             app:tabMode="scrollable"
@@ -61,6 +62,50 @@ tools:openDrawer="start">
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:padding="16dp"
+            android:background="#757575"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="64dp"
+                android:src="@drawable/filter_hdpi"
+                android:background="@android:color/transparent"
+                android:layout_gravity="start"
+                android:text="button 1" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/sort_hdpi"
+                android:background="@android:color/transparent"
+                android:text="button 2" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/suggest_term_hdpi"
+                android:layout_gravity="end"
+                android:background="@android:color/transparent"
+                android:layout_marginRight="64dp"
+                android:text="button 3" />
+
+
+        </FrameLayout>
+
+
+    </RelativeLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

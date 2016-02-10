@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initRecyclerView() {
         RecyclerView rvContacts = (RecyclerView) findViewById(R.id.rvWords);
-        RvWordsAdapter adapter = new RvWordsAdapter(Word.createWords(getResources().getStringArray(R.array.words)));
+     //   RvWordsAdapter adapter = new RvWordsAdapter(Word.createWords(getResources().getStringArray(R.array.words)));
 
-        rvContacts.setAdapter(adapter);
+    //    rvContacts.setAdapter(adapter);
 
         rvContacts.setLayoutManager(new LinearLayoutManager(this));
     }

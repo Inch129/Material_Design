@@ -4,19 +4,22 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.asgard.power.interfaces.ThumbsListener;
+
 class DislikesBtnClick implements View.OnClickListener, ThumbsListener {
     private ImageButton dislike;
     private Word word;
     private TextView likesView;
     private ThumbsListener subscriber;
-
+    private LikesBtnClick likesBtnClick;
     private ThumbsListener getSubscriber() {
         return subscriber;
     }
 
-    private void setSubscriber(ThumbsListener value) {
+    public void setSubscriber(ThumbsListener value) {
         subscriber = value;
     }
+
 
     public TextView getLikesView() {
         return likesView;
@@ -38,22 +41,26 @@ class DislikesBtnClick implements View.OnClickListener, ThumbsListener {
         this.word = word;
     }
 
-    public DislikesBtnClick(Word word, TextView likesView, ImageButton like, ThumbsListener subscriber) {
+    public DislikesBtnClick(Word word, TextView likesView, ImageButton like) {
         setWord(word);
         setDislikesView(likesView);
         setDislike(like);
         setSubscriber(subscriber);
+
     }
 
     @Override
     public void onClick(View v) {
         word.setLikes(word.getLikes() - 1);
-        dislike.setImageResource(R.drawable.thumb_red_down_hdpi);
         getLikesView().setText(Integer.toString(word.getLikes()));
-        getSubscriber().callback(this);
+        getSubscriber().callback(dislike);
     }
 
-    public void callback(View sender) {
-        //Вот тут ебенишь работу по смене отображения.
+
+    @Override
+    public void callback(ImageButton like) {
+        like.setImageResource(R.drawable.thumb_up_green_hdpi);
+        dislike.setImageResource(R.drawable.thumpdowngrey_hdpi);
+
     }
 }

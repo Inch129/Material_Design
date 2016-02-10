@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.asgard.power.interfaces.ThumbsListener;
+
 import java.util.List;
 
 public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHolder> {
@@ -39,17 +41,28 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        TextView mainWords = holder.getMainWords();
         Word word = getWords().get(position);
+        ImageButton likesBtn = holder.getLikes();
+        ImageButton dislikesBtn = holder.getDislikesBtn();
+
+        String [] wordsExample = {"Force","Strength","Energy","Influence","Might","Capacity","Potency"};
+
+
 
         final TextView likesView = holder.getLikesTextView();
         likesView.setText(Integer.toString(word.getLikes()));
 
-        ImageButton LikesBtn = holder.getLikes();
-        ImageButton DislikesBtn = holder.getDislikesBtn();
+        LikesBtnClick likeListener = new LikesBtnClick(word, likesView, holder.getLikes());
+        DislikesBtnClick disLikeListener = new DislikesBtnClick(word, likesView, holder.getDislikesBtn());
 
+        likeListener.setSubscriber(disLikeListener);
+        disLikeListener.setSubscriber(likeListener);
 
-        LikesBtn.setOnClickListener(new LikesBtnClick(word, likesView, holder.getLikesBtn()));
-        DislikesBtn.setOnClickListener(new DislikesBtnClick(word, likesView, holder.getDislikesBtn()));
+        mainWords.setText(word.getWord());
+
+        likesBtn.setOnClickListener(likeListener);
+        dislikesBtn.setOnClickListener(disLikeListener);
     }
 
     @Override
@@ -61,9 +74,19 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
         private ImageButton wordTextView;
         private TextView likesTextView;
         private ImageButton likesIncBtn;
+        private TextView mainWords;
+
 
         public ImageButton getLikes() {
             return wordTextView;
+        }
+
+        private void setMainWords(View value){
+            mainWords = (TextView) value;
+        }
+
+        public TextView getMainWords(){
+            return mainWords;
         }
 
         private void setWordTextView(View value) {
@@ -92,7 +115,7 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
 
         public ViewHolder(View itemView) {
             super(itemView);
-
+            setMainWords(itemView.findViewById(R.id.mainwords));
             setWordTextView(itemView.findViewById(R.id.thumpup));
             setLikesTextView(itemView.findViewById(R.id.likes));
             setLikesIncBtn(itemView.findViewById(R.id.thumpdown));
