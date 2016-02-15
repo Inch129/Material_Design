@@ -1,6 +1,8 @@
 package com.asgard.power;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +11,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.asgard.power.interfaces.ThumbsListener;
+import com.cocosw.bottomsheet.BottomSheet;
 
 import java.util.List;
 
 public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHolder> {
 
     private List<Word> words;
-
+    private Activity activity;
     public List<Word> getWords() {
         return words;
     }
@@ -24,8 +27,9 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
         this.words = words;
     }
 
-    public RvWordsAdapter(List<Word> words) {
+    public RvWordsAdapter(List<Word> words, Activity activity) {
         setWords(words);
+        this.activity = activity;
     }
 
     @Override
@@ -45,10 +49,7 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
         Word word = getWords().get(position);
         ImageButton likesBtn = holder.getLikes();
         ImageButton dislikesBtn = holder.getDislikesBtn();
-
-        String [] wordsExample = {"Force","Strength","Energy","Influence","Might","Capacity","Potency"};
-
-
+        ImageButton infoBtn = holder.getInfo();
 
         final TextView likesView = holder.getLikesTextView();
         likesView.setText(Integer.toString(word.getLikes()));
@@ -63,6 +64,18 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
 
         likesBtn.setOnClickListener(likeListener);
         dislikesBtn.setOnClickListener(disLikeListener);
+
+        infoBtn.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new BottomSheet.Builder(activity).title("Типо нулевой тайтл").sheet(R.menu.bottom_sheet_menu).listener(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
+            }
+        });
     }
 
     @Override
@@ -75,17 +88,25 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
         private TextView likesTextView;
         private ImageButton likesIncBtn;
         private TextView mainWords;
+        private ImageButton info;
 
+        public void setInfo(View value) {
+            info = (ImageButton) value;
+        }
+
+        private ImageButton getInfo() {
+            return info;
+        }
 
         public ImageButton getLikes() {
             return wordTextView;
         }
 
-        private void setMainWords(View value){
+        private void setMainWords(View value) {
             mainWords = (TextView) value;
         }
 
-        public TextView getMainWords(){
+        public TextView getMainWords() {
             return mainWords;
         }
 
@@ -115,6 +136,7 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
 
         public ViewHolder(View itemView) {
             super(itemView);
+            setInfo(itemView.findViewById(R.id.info));
             setMainWords(itemView.findViewById(R.id.mainwords));
             setWordTextView(itemView.findViewById(R.id.thumpup));
             setLikesTextView(itemView.findViewById(R.id.likes));

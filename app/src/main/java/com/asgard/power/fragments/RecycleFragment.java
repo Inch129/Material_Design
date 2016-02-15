@@ -44,7 +44,7 @@ public class RecycleFragment extends Fragment {
 
     private void initRecyclerView(View view, Context context) {
         RecyclerView rvContacts = (RecyclerView) view.findViewById(R.id.rvWords);
-        RvWordsAdapter adapter = new RvWordsAdapter(createMock());
+        RvWordsAdapter adapter = new RvWordsAdapter(createMock(), getActivity());
 
         rvContacts.setAdapter(adapter);
 
