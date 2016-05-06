@@ -2,16 +2,18 @@ package com.asgard.power;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.asgard.power.interfaces.ThumbsListener;
-import com.cocosw.bottomsheet.BottomSheet;
 
 import java.util.List;
 
@@ -19,6 +21,9 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
 
     private List<Word> words;
     private Activity activity;
+    private BottomSheetBehavior behavior;
+    private FrameLayout frameLayout;
+
     public List<Word> getWords() {
         return words;
     }
@@ -27,13 +32,16 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
         this.words = words;
     }
 
-    public RvWordsAdapter(List<Word> words, Activity activity) {
+    public RvWordsAdapter(List<Word> words, Activity activity, BottomSheetBehavior behavior, FrameLayout frameLayout) {
         setWords(words);
+        this.behavior = behavior;
         this.activity = activity;
+        this.frameLayout = frameLayout;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.d("Test", "onCreateViewHolder");
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -45,17 +53,20 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        Log.d("Test", "onBindViewHolder");
+
         TextView mainWords = holder.getMainWords();
         Word word = getWords().get(position);
-        ImageButton likesBtn = holder.getLikes();
+        ImageButton likesBtn = holder.getLikesBtn();
         ImageButton dislikesBtn = holder.getDislikesBtn();
-        ImageButton infoBtn = holder.getInfo();
-
-        final TextView likesView = holder.getLikesTextView();
+        ImageView infoBtn = holder.getInfo();
+        TextView textView = holder.getTest();
+        TextView likesView = holder.getLikesTextView();
         likesView.setText(Integer.toString(word.getLikes()));
 
-        LikesBtnClick likeListener = new LikesBtnClick(word, likesView, holder.getLikes());
+        LikesBtnClick likeListener = new LikesBtnClick(word, likesView, holder.getLikesBtn());
         DislikesBtnClick disLikeListener = new DislikesBtnClick(word, likesView, holder.getDislikesBtn());
+        Log.d("Sheet", "behavior " + behavior.getState());
 
         likeListener.setSubscriber(disLikeListener);
         disLikeListener.setSubscriber(likeListener);
@@ -65,17 +76,18 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
         likesBtn.setOnClickListener(likeListener);
         dislikesBtn.setOnClickListener(disLikeListener);
 
-        infoBtn.setOnClickListener(new ImageButton.OnClickListener() {
+        infoBtn.setOnClickListener(new InfoBtnClick());
+
+
+
+    /*    infoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new BottomSheet.Builder(activity).title("Типо нулевой тайтл").sheet(R.menu.bottom_sheet_menu).listener(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).show();
+                Log.d("Btn", "Событие сработало");
+                Toast.makeText(activity, "Тык" , Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
+
     }
 
     @Override
@@ -83,23 +95,20 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
         return getWords().size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageButton wordTextView;
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        private ImageButton likesBtn;
         private TextView likesTextView;
-        private ImageButton likesIncBtn;
+        private ImageButton dislikesBtn;
         private TextView mainWords;
-        private ImageButton info;
+        private ImageView info;
+        private TextView maintest;
 
         public void setInfo(View value) {
-            info = (ImageButton) value;
+            info = (ImageView) value;
         }
 
-        private ImageButton getInfo() {
+        private ImageView getInfo() {
             return info;
-        }
-
-        public ImageButton getLikes() {
-            return wordTextView;
         }
 
         private void setMainWords(View value) {
@@ -110,8 +119,8 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
             return mainWords;
         }
 
-        private void setWordTextView(View value) {
-            wordTextView = (ImageButton) value;
+        private void setLikesBtn(View value) {
+            likesBtn = (ImageButton) value;
         }
 
         public TextView getLikesTextView() {
@@ -123,24 +132,34 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
         }
 
         public ImageButton getDislikesBtn() {
-            return likesIncBtn;
+            return dislikesBtn;
         }
 
         public ImageButton getLikesBtn() {
-            return wordTextView;
+            return likesBtn;
         }
 
-        private void setLikesIncBtn(View value) {
-            likesIncBtn = (ImageButton) value;
+        public TextView getTest() {
+            return maintest;
+        }
+
+        public void setTest(View value) {
+            maintest = (TextView) value;
+        }
+
+        private void setDislikesBtn(View value) {
+            dislikesBtn = (ImageButton) value;
         }
 
         public ViewHolder(View itemView) {
             super(itemView);
-            setInfo(itemView.findViewById(R.id.info));
+            setInfo(itemView.findViewById(R.id.infobtn));
             setMainWords(itemView.findViewById(R.id.mainwords));
-            setWordTextView(itemView.findViewById(R.id.thumpup));
+            setLikesBtn(itemView.findViewById(R.id.thumpup));
             setLikesTextView(itemView.findViewById(R.id.likes));
-            setLikesIncBtn(itemView.findViewById(R.id.thumpdown));
+            setDislikesBtn(itemView.findViewById(R.id.thumpdown));
+            setTest(itemView.findViewById(R.id.mainwords2));
+
         }
     }
 }

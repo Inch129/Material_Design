@@ -30,6 +30,7 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+
         switch (position) {
             case 0:
                 return RecycleFragment.getInstance();
@@ -46,6 +47,8 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
         }
         return null;
     }
+
+
 
     @Override
     public int getCount() {

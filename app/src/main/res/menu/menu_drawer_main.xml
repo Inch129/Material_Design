@@ -2,39 +2,40 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
+
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/search_hdpi"
+            android:icon="@drawable/recent_activity"
             android:title="Your recent activity" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/search_hdpi"
+            android:icon="@drawable/recent_suggestion"
             android:title="Recent suggestion" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/search_hdpi"
+            android:icon="@drawable/suggest_term_drawer"
             android:title="Suggest term" />
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/search_hdpi"
+            android:icon="@drawable/settings"
             android:title="Settings" />
 
-    <item android:title="">
+        <item android:title=""></item>
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/search_hdpi"
+                android:icon="@drawable/rate_app"
                 android:title="Rate app" />
             <item
                 android:id="@+id/nav_send"
-                android:icon="@drawable/search_hdpi"
+                android:icon="@drawable/feedback"
                 android:title="Feedback" />
             <item
                 android:id="@+id/share"
-                android:icon="@drawable/search_hdpi"
+                android:icon="@drawable/share"
                 android:title="Share" />
         </menu>
-    </item>
+
     </group>
 
 </menu>

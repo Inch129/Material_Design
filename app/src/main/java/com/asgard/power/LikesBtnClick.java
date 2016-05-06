@@ -60,7 +60,7 @@ public class LikesBtnClick implements View.OnClickListener, ThumbsListener {
     @Override
     public void callback(ImageButton dislike) {
         Log.d("Test","callback сработал");
-        dislike.setImageResource(R.drawable.thumb_red_down_hdpi);
-        like.setImageResource(R.drawable.thumpupgrey_hdpi);
+        dislike.setImageResource(R.drawable.thumb_red_down);
+        like.setImageResource(R.drawable.thumbupgrey);
     }
 }

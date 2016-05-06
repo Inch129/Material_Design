@@ -39,4 +39,5 @@ public class Word  {
     public void setLikes(int likes) {
         this.likes = likes;
     }
+
 }
