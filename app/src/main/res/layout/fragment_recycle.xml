@@ -1,36 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/recyclefragment"
-    android:orientation="vertical">
 
- <!--   <LinearLayout
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragmentRecycleCoordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/recyclefragment"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#F0F0F0"
-        android:id="@+id/fragment_recycle"
-        android:orientation="vertical"
-        android:clickable="false"
-        android:padding="16dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-
-            android:paddingLeft="20dp"
+        <LinearLayout
+            android:id="@+id/subheader"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="#F0F0F0"
             android:clickable="false"
-            android:text="Очевидно длинный текст"
-            android:textColor="#9e9e9e"
-            android:textSize="14sp"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:paddingLeft="20dp"
+                android:text="Очевидно длинный текст"
+                android:textColor="#9e9e9e"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvWords"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content" />
+            android:layout_below="@+id/subheader" />
 
-    </LinearLayout>-->
 
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/rvWords"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    />
-</LinearLayout>
+       <!-- <FrameLayout
+            android:id="@+id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_alignParentBottom="true"
+            android:background="#757575"
+            android:orientation="horizontal"
+            android:paddingLeft="64dp"
+            android:paddingRight="64dp">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center"
+                android:layout_marginLeft="25dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/filter"
+                android:text="button 1" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:src="@drawable/sort"
+                android:text="button 2" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center"
+                android:layout_marginRight="25dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/suggest_term"
+                android:text="button 3" />
+
+
+        </FrameLayout>-->
+
+
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

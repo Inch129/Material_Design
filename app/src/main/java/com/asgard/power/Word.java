@@ -4,25 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Word  {
+public class Word {
 
-    public Word(String word, int likes) {
+    private LikeState state;
+
+    public Word(String word, int likes, LikeState state) {
+        this.state = state;
         this.word = word;
         this.likes = likes;
     }
 
-   /* public static List<Word> createWords(String [] words){
-        List<Word> content = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            for (String word:words) {
-                content.add(new Word(word, new Random().nextInt(100)));
-            }
-        }
-        return content;
-    }*/
-
     private String word;
     private int likes;
+
+    public LikeState getState() {
+        return state;
+    }
+
+    public void setState(LikeState state) {
+        this.state = state;
+    }
 
     public String getWord() {
         return word;

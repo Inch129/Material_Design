@@ -2,6 +2,8 @@ package com.asgard.power;
 
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -15,69 +17,116 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.asgard.power.adapter.TabsPagerFragmentAdapter;
 import com.asgard.power.fragments.RecycleFragment;
+import com.asgard.power.interfaces.BottomSheetCallbackAdapter;
+import com.asgard.power.interfaces.BottomSheetSaveState;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnMenuTabClickListener;
 
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private BottomSheetBehavior behavior;
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BottomSheetSaveState {
+    private static BottomSheetBehavior behavior;
     private Toolbar toolbar;
     private ViewPager viewPager;
-    private FrameLayout frameSheet;
     private CoordinatorLayout coordinatorLayout;
     private View bottomSheet;
+    private boolean isExpanded;
+    private BottomSheetCallbackAdapter subscriber;
+    private BottomBar bottomBar;
+    private RvWordsAdapter adapter;
+
+
+    public RvWordsAdapter getWordsAdapter() {
+        return this.adapter;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("adapter", "onCreate:" + adapter);
+
+        if (adapter instanceof BottomSheetCallbackAdapter) {
+            subscriber = (BottomSheetCallbackAdapter) adapter;
+        } else {
+            throw new IllegalStateException("Subscriber must implement Bottom Sheet Callback Adapter interface");
+        }
+        setSubscriber(adapter);
         initToolbar();
         initNavigationDrawer();
         initTabs();
         initBottomSheetBehavior();
+
+        // initBottomBar(savedInstanceState);
     }
 
-
-
-    private static void hideSheet(View bottomSheet, final BottomSheetBehavior behavior){
-        bottomSheet.post(new Runnable() {
+    private void initBottomBar(Bundle savedInstanceState) {
+        bottomBar = BottomBar.attach(this, savedInstanceState);
+        bottomBar.setItemsFromMenu(R.menu.bottom_bar_menu, new OnMenuTabClickListener() {
             @Override
-            public void run() {
-                behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            public void onMenuTabSelected(@IdRes int menuItemId) {
+
+            }
+
+            @Override
+            public void onMenuTabReSelected(@IdRes int menuItemId) {
+
             }
         });
+
     }
 
+    public void setSubscriber(BottomSheetCallbackAdapter bottomSheetCallbackAdapter) {
+        subscriber = bottomSheetCallbackAdapter;
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        bottomBar.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void saveState(int state) {
+        if (isExpanded) {
+            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        } else {
+            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+        isExpanded = !isExpanded;
+
+
+    }
+
+
     private void initBottomSheetBehavior() {
-      //  RecycleFragment frag = (RecycleFragment )getSupportFragmentManager().findFragmentById(R.id.recyclefragment123456);
-
-
-        frameSheet = (FrameLayout) findViewById(R.id.framesheet);
-
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
-
         bottomSheet = coordinatorLayout.findViewById(R.id.framesheet);
         behavior = BottomSheetBehavior.from(bottomSheet);
         Log.d("Sheet", "behavior " + behavior);
-        hideSheet(bottomSheet,behavior);
-        RecycleFragment.getInstance().setContext(this);
-        RecycleFragment.getInstance().setBehaviorSheet(behavior, frameSheet);
 
-        behavior.setBottomSheetCallback(new BehaviorController(behavior));
+
+        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+
+                saveState(newState);
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
 
 
     }
 
-    public  BottomSheetBehavior getBehavior(){
-        return behavior;
-    }
-
-    public FrameLayout getFrameSheet(){
-        return frameSheet;
-    }
 
     private void initTabs() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -96,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.open_drawer, R.string.close_drawer);
-    //    drawer.setDrawerListener(toggle);
+        //    drawer.setDrawerListener(toggle);
         toggle.setHomeAsUpIndicator(R.drawable.hamburger);
         /**
          Сам момент синхронизации
@@ -123,12 +172,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Поддержка тулбара.Насколько я понимаю, система принимает его как ActionBar , но кастомизированный
-        //нами, обязательно к использованию.
+
         setSupportActionBar(toolbar);
         //Вытаскиваем иконку гамбургера.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitle("Power");
+        toolbar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
     }
 
     @Override

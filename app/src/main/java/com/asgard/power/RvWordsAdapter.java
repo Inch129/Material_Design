@@ -3,6 +3,7 @@ package com.asgard.power;
 import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,28 +16,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.asgard.power.interfaces.BottomSheetCallbackAdapter;
+
 import java.util.List;
 
-public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHolder> {
-
+public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHolder> implements BottomSheetCallbackAdapter{
     private List<Word> words;
-    private Activity activity;
     private BottomSheetBehavior behavior;
-    private FrameLayout frameLayout;
+    private boolean checkLikes[];
 
     public List<Word> getWords() {
         return words;
     }
 
+
     private void setWords(List<Word> words) {
         this.words = words;
     }
 
-    public RvWordsAdapter(List<Word> words, Activity activity, BottomSheetBehavior behavior, FrameLayout frameLayout) {
+    public RvWordsAdapter(List<Word> words) {
+        this.words = words;
         setWords(words);
-        this.behavior = behavior;
-        this.activity = activity;
-        this.frameLayout = frameLayout;
     }
 
     @Override
@@ -52,47 +52,68 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         Log.d("Test", "onBindViewHolder");
 
         TextView mainWords = holder.getMainWords();
         Word word = getWords().get(position);
+
+        holder.setWord(word);
+
+
+
         ImageButton likesBtn = holder.getLikesBtn();
         ImageButton dislikesBtn = holder.getDislikesBtn();
-        ImageView infoBtn = holder.getInfo();
-        TextView textView = holder.getTest();
+
         TextView likesView = holder.getLikesTextView();
         likesView.setText(Integer.toString(word.getLikes()));
 
-        LikesBtnClick likeListener = new LikesBtnClick(word, likesView, holder.getLikesBtn());
-        DislikesBtnClick disLikeListener = new DislikesBtnClick(word, likesView, holder.getDislikesBtn());
-        Log.d("Sheet", "behavior " + behavior.getState());
+        LikesBtnClick like = new LikesBtnClick(words, word, likesView, holder.getLikesBtn());
+        DislikesBtnClick dislike = new DislikesBtnClick(word, likesView, holder.getDislikesBtn());
 
-        likeListener.setSubscriber(disLikeListener);
-        disLikeListener.setSubscriber(likeListener);
+        like.setSubscriber(dislike);
+        dislike.setSubscriber(like);
+
+        holder.info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggle();
+            }
+        });
+
 
         mainWords.setText(word.getWord());
 
-        likesBtn.setOnClickListener(likeListener);
-        dislikesBtn.setOnClickListener(disLikeListener);
+        switch (word.getState()){
+            case None:
+                holder.getLikesBtn().setImageResource(R.drawable.thumbupgrey);
+                holder.getDislikesBtn().setImageResource(R.drawable.thumbdowngrey);
+                break;
 
-        infoBtn.setOnClickListener(new InfoBtnClick());
+            case Like:
+                holder.getLikesBtn().setImageResource(R.drawable.thumb_up_green);
+                holder.getDislikesBtn().setImageResource(R.drawable.thumbdowngrey);
+                break;
 
+            case Dislike:
+                holder.getLikesBtn().setImageResource(R.drawable.thumbupgrey);
+                holder.getDislikesBtn().setImageResource(R.drawable.thumb_red_down);
+                break;
+        }
 
-
-    /*    infoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Btn", "Событие сработало");
-                Toast.makeText(activity, "Тык" , Toast.LENGTH_SHORT).show();
-            }
-        });*/
+        likesBtn.setOnClickListener(like);
+        dislikesBtn.setOnClickListener(dislike);
 
     }
 
     @Override
     public int getItemCount() {
         return getWords().size();
+    }
+
+    @Override
+    public void toggle() {
+        Log.d("subscriber", "Done");
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -102,6 +123,15 @@ public class RvWordsAdapter extends RecyclerView.Adapter<RvWordsAdapter.ViewHold
         private TextView mainWords;
         private ImageView info;
         private TextView maintest;
+        private Word word;
+
+        public Word getWord() {
+            return word;
+        }
+
+        public void setWord(Word word) {
+            this.word = word;
+        }
 
         public void setInfo(View value) {
             info = (ImageView) value;

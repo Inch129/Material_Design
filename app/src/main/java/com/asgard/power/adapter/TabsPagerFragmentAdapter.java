@@ -1,12 +1,16 @@
 package com.asgard.power.adapter;
 
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
+import com.asgard.power.MainActivity;
 import com.asgard.power.fragments.RecycleFragment;
 
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
+
 
     String tabs[] = {
             "SYNONYMS",
@@ -16,6 +20,8 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
             "CHEWIE, WE ARE HOME",
             "ELSE TAB"
     };
+
+
 
 
     public TabsPagerFragmentAdapter(FragmentManager fm) {

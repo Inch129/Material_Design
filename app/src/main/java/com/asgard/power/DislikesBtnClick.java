@@ -21,6 +21,7 @@ class DislikesBtnClick implements View.OnClickListener, ThumbsListener {
     }
 
 
+
     public TextView getLikesView() {
         return likesView;
     }
@@ -52,6 +53,7 @@ class DislikesBtnClick implements View.OnClickListener, ThumbsListener {
     @Override
     public void onClick(View v) {
         word.setLikes(word.getLikes() - 1);
+        word.setState(LikeState.Dislike);
         getLikesView().setText(Integer.toString(word.getLikes()));
         getSubscriber().callback(dislike);
     }

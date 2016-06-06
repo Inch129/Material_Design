@@ -7,16 +7,15 @@ import android.widget.TextView;
 
 import com.asgard.power.interfaces.ThumbsListener;
 
-/**
- * Created by Администратор on 01.02.2016.
- */
+import java.util.List;
+
 public class LikesBtnClick implements View.OnClickListener, ThumbsListener {
 
     private Word word;
     private TextView likesView;
     private ImageButton like;
     private ThumbsListener subscriber;
-
+    private List<Word> words;
     private ThumbsListener getSubscriber() {
         return subscriber;
     }
@@ -25,7 +24,8 @@ public class LikesBtnClick implements View.OnClickListener, ThumbsListener {
         subscriber = value;
     }
 
-    public LikesBtnClick(Word word, TextView likesView, ImageButton like) {
+    public LikesBtnClick(List<Word> words,Word word, TextView likesView, ImageButton like) {
+        this.words = words;
         setWord(word);
         setLikesView(likesView);
         setLike(like);
@@ -51,11 +51,10 @@ public class LikesBtnClick implements View.OnClickListener, ThumbsListener {
     public void onClick(View v) {
         Log.d("Test", "сабскрайбер сработал");
         word.setLikes(word.getLikes() + 1);
-
+        word.setState(LikeState.Like);
         getLikesView().setText(Integer.toString(word.getLikes()));
         getSubscriber().callback(like);
     }
-
 
     @Override
     public void callback(ImageButton dislike) {
